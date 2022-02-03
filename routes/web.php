@@ -27,8 +27,9 @@ Route::middleware('auth')
         // Admin homepage
         Route::get('/', 'HomeController@index')->name('home');
 
-        // Posts menu
-        
+        // Posts resourse routes
+        Route::resource('/posts', 'PostController');
+
     });
 
 /**
