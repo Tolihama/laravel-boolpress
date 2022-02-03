@@ -78,12 +78,20 @@
             <aside class="sidebar p-3 bg-light">
                 <ul class="nav nav-pills flex-column flex-grow-1 mb-auto">
                   <li class="nav-item">
-                    <a href="{{ route('admin.home') }}" class="nav-link active">
+                    <a 
+                        href="{{ route('admin.home') }}"
+                        class="nav-link link-dark 
+                        @if(Request::route()->getName() == 'admin.home') active @endif"
+                    >
                       Home
                     </a>
                   </li>
                   <li>
-                    <a href="{{ route('admin.posts.index') }}" class="nav-link link-dark">
+                    <a 
+                        href="{{ route('admin.posts.index') }}" 
+                        class="nav-link link-dark
+                        @if(Request::route()->getName() == 'admin.posts') active @endif"
+                    >
                       Post
                     </a>
                   </li>

@@ -9,4 +9,5 @@
 @import '~bootstrap/scss/bootstrap';
 
 // Sections
-@import 'controlpanel';
+@import 'partials/controlpanel';
+@import 'partials/post-show';
