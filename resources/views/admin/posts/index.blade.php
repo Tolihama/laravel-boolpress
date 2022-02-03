@@ -2,7 +2,10 @@
 
 @section('content')
     <div class="container">
-        <h2 class="mb-5">Posts List</h2>
+        <h2 class="mb-3">Posts List</h2>
+        <div class="py-3 mb-3">
+            <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">Crea nuovo post</a>
+        </div>
     
         @if ($posts->isEmpty())
             <p>No posts found. <a href="{{ route('admin.posts.create') }}">Create a new one</a>.</p>

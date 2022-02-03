@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Post;
 
 class PostController extends Controller
@@ -27,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -38,7 +39,38 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validazione
+        $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required'
+        ], [
+            'required' => 'È necessario compilare il campo ":attribute".',
+            'max' => 'Limite massimo di caratteri per il campo ":attribute": :max.'
+        ]);
+
+        $data = $request->all();
+
+        // Crea nuovo post
+        $new_post = new Post();
+
+        // Generazione slug univoco
+        $slug = Str::slug($data['title'], '-');
+        $count = 1;
+
+        while (Post::where('slug', $slug)->first()) {
+            $slug .= '-' . $count;
+            $count++;
+        }
+
+        $data['slug'] = $slug;
+
+        // Fill and save
+        $new_post->fill($data);
+        $new_post->save();
+
+        // Final redirect
+        return redirect()->route('admin.posts.show', $new_post->slug);
+
     }
 
     /**

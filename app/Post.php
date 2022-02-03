@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    //
+    /**
+     * Mass Assignment
+     */
+    protected $fillable = [
+        'title',
+        'content',
+        'slug'
+    ];
 }
