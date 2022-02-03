@@ -40,13 +40,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         // Validazione
-        $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required'
-        ], [
-            'required' => 'È necessario compilare il campo ":attribute".',
-            'max' => 'Limite massimo di caratteri per il campo ":attribute": :max.'
-        ]);
+        $request->validate($this->validation_rules(), $this->validation_messages());
 
         $data = $request->all();
 
@@ -70,7 +64,6 @@ class PostController extends Controller
 
         // Final redirect
         return redirect()->route('admin.posts.show', $new_post->slug);
-
     }
 
     /**
@@ -98,7 +91,14 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        // Query for post to edit
+        $edit_post = Post::find($id);
+
+        if (! $edit_post) {
+            abort(404);
+        }
+
+        return view('admin.posts.edit', compact('edit_post'));
     }
 
     /**
@@ -110,7 +110,36 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Validazione
+        $request->validate($this->validation_rules(), $this->validation_messages());
+
+        // Retrieve data from edit form
+        $data = $request->all();
+
+        // Retrieve post from db
+        $post = Post::find($id);
+
+        // Slug update if title changed
+        if ($post->title != $data['title']) {
+            $slug = Str::slug($data['title'], '-');
+            $count = 1;
+    
+            while (Post::where('slug', $slug)->first()) {
+                $slug .= '-' . $count;
+                $count++;
+            }
+
+            $data['slug'] = $slug;
+        }
+        else {
+            $data['slug'] = $post->slug;
+        }
+
+        // Update
+        $post->update($data);
+
+        // Redirect
+        return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**
@@ -121,6 +150,30 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete_post = Post::find($id);
+
+        $delete_post->delete();
+
+        return redirect()->route('admin.posts.index')->with('deleted', $delete_post->title);
+    }
+
+    /**
+     * Validate rules
+     */
+    private function validation_rules() {
+        return [
+            'title' => 'required|max:255',
+            'content' => 'required'
+        ];
+    }
+
+    /**
+     * Validate error messages
+     */
+    private function validation_messages() {
+        return [
+            'required' => 'È necessario compilare il campo ":attribute".',
+            'max' => 'Limite massimo di caratteri per il campo ":attribute": :max.'
+        ];
     }
 }
