@@ -48,7 +48,7 @@
                     @foreach ($categories as $category)
                         <option 
                             value="{{ $category->id }}"
-                            @if($category->id == old('category_id', $post->category_id)) selected @endif
+                            @if($category->id == old('category_id', $edit_post->category_id)) selected @endif
                         >
                             {{ $category->name }}
                         </option>
