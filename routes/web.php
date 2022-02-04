@@ -30,6 +30,9 @@ Route::middleware('auth')
         // Posts resourse routes
         Route::resource('/posts', 'PostController');
 
+        // Category page route
+        Route::resource('/post/categories', 'CategoryController');
+
     });
 
 /**

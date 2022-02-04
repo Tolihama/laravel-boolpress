@@ -91,14 +91,14 @@
                         <a 
                             href="{{ route('admin.posts.index') }}" 
                             class="nav-link link-dark
-                            @if(preg_match('/admin.posts/', Request::route()->getName())) active @endif"
+                            @if(preg_match('/admin\/post/', Request::route()->uri)) active @endif"
                         >
                             Post
                         </a>
-                        @if (preg_match('/admin.posts/', Request::route()->getName()))
+                        @if (preg_match('/admin\/post/', Request::route()->uri))
                             <ul class="flex-column py-2">
                                 <li>
-                                    <a href="">Categories</a>
+                                    <a href="{{ route('admin.categories.index') }}">Categories</a>
                                 </li>
                                 <li>
                                     <a href="">Tags</a>

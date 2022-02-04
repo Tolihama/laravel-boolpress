@@ -10,7 +10,7 @@ class Category extends Model
      * RELATIONS
      */
     // categories - posts
-    public function post() {
+    public function posts() {
         return $this->hasMany('App\Post');
     }
 }

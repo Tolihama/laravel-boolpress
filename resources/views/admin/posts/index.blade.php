@@ -30,7 +30,7 @@
                             <td>{{ $post->title }}</td>
                             <td>
                                 @if ($post->category)
-                                    <span class="badge text-white bg-primary p-2">{{ $post->category->name }}</span>
+                                    <a href="{{ route('admin.categories.show', $post->category_id) }}" class="badge text-white bg-primary p-2">{{ $post->category->name }}</a>
                                 @else
                                     <span class="badge text-white bg-secondary p-2">Uncategorized</span>
                                 @endif
