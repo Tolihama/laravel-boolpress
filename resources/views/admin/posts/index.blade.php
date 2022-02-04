@@ -16,19 +16,25 @@
         @if ($posts->isEmpty())
             <p>No posts found. <a href="{{ route('admin.posts.create') }}">Create a new one</a>.</p>
         @else
-            <table class="table">
+            <table class="table table-hover align-middle">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Title</th>
-                        <th>Actions</th>
+                        <th>Titolo</th>
+                        <th>Categoria</th>
+                        <th>Azioni</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($posts as $post)
                         <tr>
-                            <td>{{ $post->id }}</td>
                             <td>{{ $post->title }}</td>
+                            <td>
+                                @if ($post->category)
+                                    <span class="badge text-white bg-primary p-2">{{ $post->category->name }}</span>
+                                @else
+                                    <span class="badge text-white bg-secondary p-2">Uncategorized</span>
+                                @endif
+                            </td>
                             <td class="d-flex">
                                 <a href="{{ route('admin.posts.show', $post->slug) }}" class="btn btn-success">Show</a>
                                 <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary mx-3">Edit</a>

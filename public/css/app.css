@@ -10090,3 +10090,12 @@ article.post-details {
   border-radius: 10px;
   box-shadow: 0 0 10px 1px #ccc;
 }
+article.post-details .post-info .cat {
+  color: #fff;
+}
+article.post-details .post-info .cat::before {
+  content: "\F07C";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 700;
+  margin-right: 0.5rem;
+}

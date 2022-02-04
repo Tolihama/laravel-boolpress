@@ -10,6 +10,14 @@
 
         <article class="post-details p-5">
             <h3 class="fw-bold">{{ $post->title }}</h3>
+            <div class="post-info py-3 d-flex">
+                {{-- Category --}}
+                @if ($post->category)
+                    <span class="cat badge bg-primary p-2 me-3">{{ $post->category->name }}</span>
+                @else
+                    <span class="cat badge bg-secondary p-2 me-3">Uncategorized</span>
+                @endif
+            </div>
             <div class="post-content">
                 {{ $post->content }}
             </div>
