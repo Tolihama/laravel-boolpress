@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 // Models
 use App\Post;
 use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -33,8 +34,9 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -48,9 +50,10 @@ class PostController extends Controller
         // Validazione
         $request->validate($this->validation_rules(), $this->validation_messages());
 
+        // Save all data from form
         $data = $request->all();
 
-        // Crea nuovo post
+        // Crea nuovo istanza di Post
         $new_post = new Post();
 
         // Generazione slug univoco
@@ -67,6 +70,11 @@ class PostController extends Controller
         // Fill and save
         $new_post->fill($data);
         $new_post->save();
+
+        // Save relation between post and tags in pivot
+        if(array_key_exists('tags', $data)) {
+            $new_post->tags()->attach($data['tags']);
+        }
 
         // Final redirect
         return redirect()->route('admin.posts.show', $new_post->slug);
@@ -102,12 +110,13 @@ class PostController extends Controller
 
         // Categories retrieve
         $categories = Category::all();
+        $tags = Tag::all();
 
         if (! $edit_post) {
             abort(404);
         }
 
-        return view('admin.posts.edit', compact('edit_post', 'categories'));
+        return view('admin.posts.edit', compact('edit_post', 'categories', 'tags'));
     }
 
     /**
@@ -147,6 +156,13 @@ class PostController extends Controller
         // Update
         $post->update($data);
 
+        // Sync tags
+        if (array_key_exists('tags', $data)) {
+            $post->tags()->sync($data['tags']);
+        } else {
+            $post->tags()->detach();
+        }
+
         // Redirect
         return redirect()->route('admin.posts.show', $post->slug);
     }
@@ -174,6 +190,7 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id'
         ];
     }
 
@@ -185,6 +202,7 @@ class PostController extends Controller
             'required' => 'È necessario compilare il campo ":attribute".',
             'max' => 'Limite massimo di caratteri per il campo ":attribute": :max.',
             'category_id.exists' => "L'id della categoria non è valido.",
+            'tags.exists' => "C'è almeno un id non valido."
         ];
     }
 }

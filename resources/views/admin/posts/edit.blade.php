@@ -24,6 +24,7 @@
             @csrf
             @method('PATCH')
 
+            {{-- Title --}}
             <div class="mb-3">
                 <label for="title" class="label-control">Titolo*</label>
                 <input type="text" class="form-control" name="title" id="title" value="{{ old('title', $edit_post->title) }}">
@@ -32,7 +33,7 @@
                 @enderror
             </div>
 
-            
+            {{-- Content --}}
             <div class="mb-3">
                 <label for="content" class="label-control">Contenuto*</label>
                 <textarea class="form-control" name="content" id="content">{{ old('content', $edit_post->content) }}</textarea>
@@ -41,6 +42,7 @@
                 @enderror
             </div>
 
+            {{-- Categories --}}
             <div class="mb-3">
                 <label for="category_id" class="label-control">Categoria:</label>
                 <select class="form-control" name="category_id" id="category_id">
@@ -59,6 +61,27 @@
                 @enderror
             </div>
 
+            {{-- Tags --}}
+            <div class="mb-3">
+                <h4>Tags</h4>
+                @foreach ($tags as $tag)
+                    <span class="d-inline-block form-check mr-3">
+                        <input class="form-check-input" type="checkbox" name="tags[]" id="tag{{ $loop->iteration }}" value="{{ $tag->id }}"
+                            @if($errors->any() && in_array($tag->id, old('tags'))) 
+                                checked 
+                            @elseif(!$errors->any() && $edit_post->tags->contains($tag->id))
+                                checked
+                            @endif>
+                            
+                        <label for="tag{{ $loop->iteration }}">
+                            {{ $tag->name }}
+                        </label>
+                    </span>
+                @endforeach
+                @error('tags')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
 
             <button class="btn btn-primary" type="submit">Modifica il post</button>
         </form>
