@@ -78,26 +78,26 @@
 
             {{-- CP Aside --}}
             <aside class="sidebar p-3 bg-light">
-                <ul class="nav nav-pills flex-column flex-grow-1 mb-auto">
+                <ul class="nav nav-pills flex-column flex-grow-1 font-weight-bold">
                     <li>
                         <a 
                             href="{{ route('admin.home') }}"
-                            class="nav-link link-dark 
+                            class="nav-link link-dark
                             @if(Request::route()->getName() == 'admin.home') active @endif"
                         >
                             Dashboard
                         </a>
                     </li>
-                    <li>
+                    <li class="@if(preg_match('/admin\/post/', Request::route()->uri)) active @endif">
                         <a 
                             href="{{ route('admin.posts.index') }}" 
-                            class="nav-link link-dark
+                            class="nav-link link-dark font-weight-bold
                             @if(preg_match('/admin\/post/', Request::route()->uri)) active @endif"
                         >
                             Post
                         </a>
                         @if (preg_match('/admin\/post/', Request::route()->uri))
-                            <ul class="flex-column py-2">
+                            <ul class="subnav flex-column py-2">
                                 <li>
                                     <a href="{{ route('admin.categories.index') }}">Categories</a>
                                 </li>

@@ -10,6 +10,9 @@ body #app {
   flex-grow: 1;
   overflow: hidden;
 }
+body ul {
+  margin-bottom: 0;
+}
 
 .bg-blue {
   background-color: #3490dc;
@@ -49,6 +52,17 @@ body #app {
 
 .bg-cyan {
   background-color: #6cb2eb;
+}
+
+.nav li.active {
+  background-color: #6cb2eb;
+  border-radius: 10px;
+}
+.nav .subnav {
+  list-style: none;
+}
+.nav .subnav a {
+  color: #fff;
 }
 
 /*!

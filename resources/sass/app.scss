@@ -2,11 +2,12 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
-@import 'variables';
-@import 'default';
+@import 'partials/variables';
+@import 'partials/default';
 
 // Utilities
-@import 'backgrounds';
+@import 'partials/backgrounds';
+@import 'partials/cp-sidebar';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';

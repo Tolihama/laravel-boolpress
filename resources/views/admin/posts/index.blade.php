@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h2 class="mb-3">Posts List</h2>
-        <div class="py-3 mb-3">
+        <div class="py-3 mb-4">
             <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">Crea nuovo post</a>
         </div>
 
@@ -16,11 +16,23 @@
         @if ($posts->isEmpty())
             <p>No posts found. <a href="{{ route('admin.posts.create') }}">Create a new one</a>.</p>
         @else
+            <div class="d-flex align-items-center mb-4">
+                @if ($posts->links()->data !== null)
+                    <div class="mr-3">
+                        {{ $posts->onEachSide(0)->links() }}
+                    </div>
+                @endif
+                <div>
+                    {{ $posts_count }} elementi
+                </div>
+            </div>
+
             <table class="table table-hover align-middle">
                 <thead>
                     <tr>
                         <th>Titolo</th>
                         <th>Categoria</th>
+                        <th>Ultima modifica</th>
                         <th>Azioni</th>
                     </tr>
                 </thead>
@@ -35,6 +47,7 @@
                                     <span class="badge text-white bg-secondary p-2">Uncategorized</span>
                                 @endif
                             </td>
+                            <td>{{ $post->updated_at }}</td>
                             <td class="d-flex">
                                 <a href="{{ route('admin.posts.show', $post->slug) }}" class="btn btn-success">Show</a>
                                 <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary mx-3">Edit</a>
