@@ -2,12 +2,13 @@
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
 }
 body #app {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  overflow: hidden;
 }
 
 .bg-blue {
@@ -10073,6 +10074,7 @@ h3 {
 main.cp {
   display: flex;
   flex-grow: 1;
+  overflow: hidden;
 }
 main.cp aside.sidebar {
   display: flex;
@@ -10080,9 +10082,11 @@ main.cp aside.sidebar {
   flex-shrink: 0;
   width: 280px;
   box-shadow: 0 0 10px 1px #ccc;
+  overflow: auto;
 }
 main.cp section.content {
   flex-grow: 1;
+  overflow: auto;
 }
 
 article.post-details {

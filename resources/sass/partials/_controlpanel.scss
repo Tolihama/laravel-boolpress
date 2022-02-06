@@ -1,6 +1,7 @@
 main.cp {
     display: flex;
     flex-grow: 1;
+    overflow: hidden;
 
     aside.sidebar {
         display: flex;
@@ -8,9 +9,11 @@ main.cp {
         flex-shrink: 0;
         width: 280px;
         box-shadow: 0 0 10px 1px #ccc;
+        overflow: auto;
     }
 
     section.content {
         flex-grow: 1;
+        overflow: auto;
     }
 }

@@ -27,11 +27,14 @@ Route::middleware('auth')
         // Admin homepage
         Route::get('/', 'HomeController@index')->name('home');
 
-        // Posts resourse routes
+        // Posts resource routes
         Route::resource('/posts', 'PostController');
 
-        // Category page route
+        // Posts Category resource route
         Route::resource('/post/categories', 'CategoryController');
+
+        // Posts Tags resource route
+        Route::resource('/post/tags', 'TagController');
 
     });
 
