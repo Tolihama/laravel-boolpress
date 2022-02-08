@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// Models import
+use App\Post;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::namespace('api')
+    ->group(function() {
+        // Posts get
+        Route::get('/posts', 'PostController@index');
+    });
