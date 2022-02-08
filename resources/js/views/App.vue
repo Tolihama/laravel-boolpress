@@ -40,7 +40,7 @@ export default {
         }
     },
     created() {
-        // this.getPostCategories();
+        this.getPostCategories();
         this.getPosts();
     },
     methods: {
@@ -59,7 +59,7 @@ export default {
         getPostCategories() {
             axios.get('http://127.0.0.1:8000/api/posts/categories')
                 .then(response => {
-                    console.log(response.data);
+                    this.postCategories = response.data;
                 })
                 .catch(err => console.log(err));
         },

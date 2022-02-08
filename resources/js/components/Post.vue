@@ -4,7 +4,7 @@
         <div class="post-info d-flex align-items-center mb-3">
             <!-- Post Category -->
             <span v-if="postData.category_id !== null" class="cat badge bg-primary p-2 mr-3">
-<!--                 {{ getPostCategoryName(postData.category_id) }} -->
+                {{ getPostCategoryName(postData.category_id) }}
             </span>
             <span v-else class="cat badge bg-secondary p-2 mr-3">Uncategorized</span>
 
@@ -30,10 +30,13 @@ export default {
             return Intl.DateTimeFormat('it-IT').format(date);
         },
         getPostCategoryName(id) {
-
+            let output = '';
+            this.postCategories.forEach(cat => cat.id === id ? output = cat.category_name : null);
+            return output;
         }
     }
 }
+// cat.id === id ? cat.category_name : null
 </script>
 
 <style lang="scss" scoped>

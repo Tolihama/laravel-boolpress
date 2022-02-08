@@ -2044,9 +2044,15 @@ __webpack_require__.r(__webpack_exports__);
       var date = new Date(inputDate);
       return Intl.DateTimeFormat('it-IT').format(date);
     },
-    getPostCategoryName: function getPostCategoryName(id) {}
+    getPostCategoryName: function getPostCategoryName(id) {
+      var output = '';
+      this.postCategories.forEach(function (cat) {
+        return cat.id === id ? output = cat.category_name : null;
+      });
+      return output;
+    }
   }
-});
+}); // cat.id === id ? cat.category_name : null
 
 /***/ }),
 
@@ -2104,7 +2110,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    // this.getPostCategories();
+    this.getPostCategories();
     this.getPosts();
   },
   methods: {
@@ -2124,8 +2130,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getPostCategories: function getPostCategories() {
+      var _this2 = this;
+
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://127.0.0.1:8000/api/posts/categories').then(function (response) {
-        console.log(response.data);
+        _this2.postCategories = response.data;
       })["catch"](function (err) {
         return console.log(err);
       });
@@ -3488,7 +3496,13 @@ var render = function () {
     _vm._v(" "),
     _c("div", { staticClass: "post-info d-flex align-items-center mb-3" }, [
       _vm.postData.category_id !== null
-        ? _c("span", { staticClass: "cat badge bg-primary p-2 mr-3" })
+        ? _c("span", { staticClass: "cat badge bg-primary p-2 mr-3" }, [
+            _vm._v(
+              "\n            " +
+                _vm._s(_vm.getPostCategoryName(_vm.postData.category_id)) +
+                "\n        "
+            ),
+          ])
         : _c("span", { staticClass: "cat badge bg-secondary p-2 mr-3" }, [
             _vm._v("Uncategorized"),
           ]),
@@ -3499,7 +3513,7 @@ var render = function () {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "post-content mb-3" }, [
-      _vm._v("\n            " + _vm._s(_vm.postData.content) + "\n        "),
+      _vm._v("\n        " + _vm._s(_vm.postData.content) + "\n    "),
     ]),
   ])
 }
