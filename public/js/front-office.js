@@ -2054,13 +2054,15 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://127.0.0.1:8000/api/posts').then(function (response) {
-        return _this.posts = response.data;
+        return _this.posts = response.data.data;
       })["catch"](function (err) {
         return console.log(err);
       });
     },
     getPostCategories: function getPostCategories() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://127.0.0.1:8000/api/posts/categories').then(function (response) {})["catch"](function (err) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://127.0.0.1:8000/api/posts/categories').then(function (response) {
+        console.log(response.data);
+      })["catch"](function (err) {
         return console.log(err);
       });
     }

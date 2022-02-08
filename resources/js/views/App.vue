@@ -41,13 +41,13 @@ export default {
     methods: {
         getPosts() {
             axios.get('http://127.0.0.1:8000/api/posts')
-                .then(response => this.posts = response.data)
+                .then(response => this.posts = response.data.data)
                 .catch(err => console.log(err));
         },
         getPostCategories() {
             axios.get('http://127.0.0.1:8000/api/posts/categories')
                 .then(response => {
-
+                    console.log(response.data);
                 })
                 .catch(err => console.log(err));
         },
