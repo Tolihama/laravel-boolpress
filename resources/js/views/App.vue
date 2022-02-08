@@ -5,7 +5,7 @@
             <div class="container">
                 <h1 class="mb-3">Articoli</h1>
                 <div class="posts" v-if="posts != null">
-                    <Post v-for="post in posts" :key="`post-${post.id}`" :postData="post" />
+                    <Post v-for="post in posts" :key="`post-${post.id}`" :postData="post" :postCategories="postCategories" />
                 </div>
                 <Loader v-else message="Articoli in caricamento"/>
             </div>
@@ -31,21 +31,26 @@ export default {
     data() {
         return {
             posts: null,
+            postCategories: null,
         }
     },
     created() {
+        // this.getPostCategories();
         this.getPosts();
     },
     methods: {
         getPosts() {
-            console.log('La funzione per la chiamata Axios è correttamente chiamata!');
-
             axios.get('http://127.0.0.1:8000/api/posts')
+                .then(response => this.posts = response.data)
+                .catch(err => console.log(err));
+        },
+        getPostCategories() {
+            axios.get('http://127.0.0.1:8000/api/posts/categories')
                 .then(response => {
-                    this.posts = response.data;
+
                 })
                 .catch(err => console.log(err));
-        }
+        },
     }
 }
 </script>

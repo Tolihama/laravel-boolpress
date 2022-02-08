@@ -1971,10 +1971,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Post',
   props: {
-    postData: Object
+    postData: Object,
+    postCategories: Array
+  },
+  methods: {
+    formatDate: function formatDate(inputDate) {
+      var date = new Date(inputDate);
+      return Intl.DateTimeFormat('it-IT').format(date);
+    },
+    getPostCategoryName: function getPostCategoryName(id) {}
   }
 });
 
@@ -2023,20 +2041,26 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      posts: null
+      posts: null,
+      postCategories: null
     };
   },
   created: function created() {
+    // this.getPostCategories();
     this.getPosts();
   },
   methods: {
     getPosts: function getPosts() {
       var _this = this;
 
-      console.log('La funzione per la chiamata Axios è correttamente chiamata!');
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://127.0.0.1:8000/api/posts').then(function (response) {
-        _this.posts = response.data;
+        return _this.posts = response.data;
       })["catch"](function (err) {
+        return console.log(err);
+      });
+    },
+    getPostCategories: function getPostCategories() {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://127.0.0.1:8000/api/posts/categories').then(function (response) {})["catch"](function (err) {
         return console.log(err);
       });
     }
@@ -2076,7 +2100,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "article[data-v-5e8280ea] {\n  border-radius: 20px;\n  box-shadow: 0 0 10px 1px #ccc;\n}", ""]);
+exports.push([module.i, "article[data-v-5e8280ea] {\n  border-radius: 20px;\n  box-shadow: 0 0 10px 1px #ccc;\n}\narticle .post-info .cat[data-v-5e8280ea] {\n  color: #fff;\n}\narticle .post-info .cat[data-v-5e8280ea]::before {\n  content: \"\\F07C\";\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 700;\n  margin-right: 0.5rem;\n}\narticle .post-info .date[data-v-5e8280ea]::before {\n  content: \"\\F073\";\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 700;\n  margin-right: 0.5rem;\n}", ""]);
 
 // exports
 
@@ -3312,8 +3336,20 @@ var render = function () {
   return _c("article", { staticClass: "p-3 mb-3" }, [
     _c("h2", { staticClass: "py-3 h3" }, [_vm._v(_vm._s(_vm.postData.title))]),
     _vm._v(" "),
+    _c("div", { staticClass: "post-info d-flex align-items-center mb-3" }, [
+      _vm.postData.category_id !== null
+        ? _c("span", { staticClass: "cat badge bg-primary p-2 mr-3" })
+        : _c("span", { staticClass: "cat badge bg-secondary p-2 mr-3" }, [
+            _vm._v("Uncategorized"),
+          ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "date" }, [
+        _vm._v(_vm._s(_vm.formatDate(_vm.postData.created_at))),
+      ]),
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "post-content mb-3" }, [
-      _vm._v("\n        " + _vm._s(_vm.postData.content) + "\n    "),
+      _vm._v("\n            " + _vm._s(_vm.postData.content) + "\n        "),
     ]),
   ])
 }
@@ -3358,7 +3394,10 @@ var render = function () {
                   _vm._l(_vm.posts, function (post) {
                     return _c("Post", {
                       key: "post-" + post.id,
-                      attrs: { postData: post },
+                      attrs: {
+                        postData: post,
+                        postCategories: _vm.postCategories,
+                      },
                     })
                   }),
                   1

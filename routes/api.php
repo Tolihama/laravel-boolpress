@@ -17,8 +17,11 @@ use App\Post;
 |
 */
 
-Route::namespace('api')
+Route::namespace('Api')
     ->group(function() {
         // Posts get
         Route::get('/posts', 'PostController@index');
+
+        // Post Categories get
+        Route::get('/posts/categories', 'CategoryController@index');
     });
