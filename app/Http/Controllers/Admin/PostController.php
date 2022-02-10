@@ -22,7 +22,7 @@ class PostController extends Controller
     public function index()
     {
         $posts_count = Post::all()->count();
-        $posts = Post::orderBy('updated_at', 'desc')
+        $posts = Post::orderBy('created_at', 'desc')
                 ->paginate(15);
 
         return view('admin.posts.index', compact('posts', 'posts_count'));

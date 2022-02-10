@@ -77,7 +77,7 @@
         <main class="cp">
 
             {{-- CP Aside --}}
-            @include('partials.cp_sidebar')
+            @include('layouts.partials.cp_sidebar')
 
             {{-- Specific page content --}}
             <section class="content py-4">

@@ -17,11 +17,14 @@
             <p>No posts found. <a href="{{ route('admin.posts.create') }}">Create a new one</a>.</p>
         @else
             <div class="d-flex align-items-center mb-4">
-                @if ($posts->links()->data !== null)
+{{--                 @if ($posts->links()->data !== null)
                     <div class="mr-3">
                         {{ $posts->onEachSide(0)->links() }}
                     </div>
-                @endif
+                @endif --}}
+                <div class="mr-3">
+                    {{ $posts->onEachSide(0)->links() }}
+                </div>
                 <div>
                     {{ $posts_count }} elementi
                 </div>
