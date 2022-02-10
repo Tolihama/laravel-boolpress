@@ -1996,10 +1996,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Pagination',
   props: {
     pagination: Object
+  },
+  computed: {
+    pageRange: function pageRange() {
+      var pagesInRange = [];
+
+      if (this.pagination.last > 3) {
+        if (this.pagination.current === 1) {
+          pagesInRange.push(this.pagination.current, this.pagination.current + 1, this.pagination.current + 2);
+        } else if (this.pagination.current === this.pagination.last) {
+          pagesInRange.push(this.pagination.current - 2, this.pagination.current - 1, this.pagination.current);
+        } else {
+          pagesInRange.push(this.pagination.current - 1, this.pagination.current, this.pagination.current + 1);
+        }
+      } else {
+        for (var i = 1; i <= this.pagination.last; i++) {
+          pagesInRange.push(i);
+        }
+      }
+
+      return pagesInRange;
+    }
   }
 });
 
@@ -3571,14 +3613,28 @@ var render = function () {
           attrs: { disabled: _vm.pagination.current === 1 },
           on: {
             click: function ($event) {
+              return _vm.$emit("newCurrentPage", 1)
+            },
+          },
+        },
+        [_c("i", { staticClass: "fas fa-angle-double-left" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary mr-2",
+          attrs: { disabled: _vm.pagination.current === 1 },
+          on: {
+            click: function ($event) {
               return _vm.$emit("newCurrentPage", _vm.pagination.current - 1)
             },
           },
         },
-        [_vm._v("\n        Prev\n    ")]
+        [_c("i", { staticClass: "fas fa-angle-left" })]
       ),
       _vm._v(" "),
-      _vm._l(_vm.pagination.last, function (i) {
+      _vm._l(_vm.pageRange, function (i) {
         return _c(
           "button",
           {
@@ -3606,7 +3662,21 @@ var render = function () {
             },
           },
         },
-        [_vm._v("\n        Next\n    ")]
+        [_c("i", { staticClass: "fas fa-angle-right" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary mr-2",
+          attrs: { disabled: _vm.pagination.current === _vm.pagination.last },
+          on: {
+            click: function ($event) {
+              return _vm.$emit("newCurrentPage", _vm.pagination.last)
+            },
+          },
+        },
+        [_c("i", { staticClass: "fas fa-angle-double-right" })]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "items_count" }, [
@@ -3732,7 +3802,7 @@ var render = function () {
     [
       _c("h1", { staticClass: "mb-3" }, [_vm._v("Articoli")]),
       _vm._v(" "),
-      _vm.pagination != null
+      _vm.pagination.total !== 1
         ? _c("Pagination", {
             attrs: { pagination: _vm.pagination },
             on: { newCurrentPage: _vm.updateCurrentPage },
@@ -3753,7 +3823,7 @@ var render = function () {
           )
         : _c("Loader", { attrs: { message: "Articoli in caricamento" } }),
       _vm._v(" "),
-      _vm.pagination != null
+      _vm.pagination.total !== 1
         ? _c("Pagination", {
             attrs: { pagination: _vm.pagination },
             on: { newCurrentPage: _vm.updateCurrentPage },
