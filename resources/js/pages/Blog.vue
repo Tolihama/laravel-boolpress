@@ -1,12 +1,12 @@
 <template>
     <div id="blog" class="container">
         <h1 class="mb-3">Articoli</h1>
-        <Pagination v-if="pagination.total !== 1" :pagination="pagination" @newCurrentPage="updateCurrentPage" />
+        <Pagination v-if="pagination.total > 1" :pagination="pagination" @newCurrentPage="updateCurrentPage" />
         <div class="posts" v-if="posts != null">
             <Post v-for="post in posts" :key="`post-${post.id}`" :post="post" />
         </div>
         <Loader v-else message="Articoli in caricamento"/>
-        <Pagination v-if="pagination.total !== 1" :pagination="pagination" @newCurrentPage="updateCurrentPage" />
+        <Pagination v-if="pagination.total > 1" :pagination="pagination" @newCurrentPage="updateCurrentPage" />
     </div>
 </template>
 

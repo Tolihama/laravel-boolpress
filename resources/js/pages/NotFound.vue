@@ -1,17 +1,17 @@
 <template>
-    <div id="home">
-        <router-link class="btn btn-primary h1" :to="{name: 'posts'}">Vai al blog!</router-link>
+    <div id="not-found">
+        <h1>404 - Page not found</h1>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Home'
+    name: 'NotFound'
 }
 </script>
 
 <style lang="scss" scoped>
-#home {
+#not-found {
     height: 100%;
     width: 100%;
     display: flex;

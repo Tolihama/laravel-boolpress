@@ -6,6 +6,7 @@ import VueRouter from 'vue-router';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
 import PostDetail from './pages/PostDetail';
+import NotFound from './pages/NotFound';
 
 // VUE ROUTES COMPONENT ACTIVATE
 Vue.use(VueRouter);
@@ -28,6 +29,11 @@ const router = new VueRouter({
             path: '/posts/:slug',
             name: 'post-detail',
             component: PostDetail
+        },
+        {
+            path: '*',
+            name: 'not-found',
+            component: NotFound
         }
     ]
 });

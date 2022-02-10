@@ -12,7 +12,9 @@ class PostController extends Controller
 {
     // Index
     public function index() {
-        $posts = Post::with(['category', 'tags'])->paginate(5);
+        $posts = Post::with(['category', 'tags'])
+                ->orderBy('created_at', 'desc')
+                ->paginate(5);
 
         return response()->json($posts);
     }
@@ -20,6 +22,10 @@ class PostController extends Controller
     // Show (Post details)
     public function show($slug) {
         $post = Post::where('slug', $slug)->with(['category', 'tags'])->first();
+
+        if(! $post) {
+            $post['not_found'] = true;
+        }
 
         return response()->json($post);
     }

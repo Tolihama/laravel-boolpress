@@ -30,7 +30,7 @@ export default {
     methods: {
         getPostDetail() {
             axios.get(`http://127.0.0.1:8000/api/posts/${this.$route.params.slug}`)
-                .then(res => this.post = res.data)
+                .then(res => res.data.not_found ? this.$router.push({ name: 'not-found' }) : this.post = res.data)
                 .catch(err => console.log(err));
         }
     }
