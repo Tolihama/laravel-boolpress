@@ -1,18 +1,40 @@
 <template>
     <article class="p-3 mb-3">
-        <h2 class="py-3 h3">{{ postData.title }}</h2>
+        <!-- Post title -->
+        <h2 class="py-3 h3 post-title" v-if="$route.name != 'post-detail'">
+            <router-link :to="{name: 'post-detail', params: { slug: post.slug }}">
+                {{ post.title }}
+            </router-link>
+        </h2>
+        <h2 class="py-3 h3 post-title" v-else>{{ post.title }}</h2>
+
+        <!-- Post infos -->
         <div class="post-info d-flex align-items-center mb-3">
             <!-- Post Category -->
-            <span v-if="postData.category_id !== null" class="cat badge bg-primary p-2 mr-3">
-                {{ getPostCategoryName(postData.category_id) }}
+            <span v-if="post.category !== null" class="cat badge bg-primary p-2 mr-3">
+                {{ post.category.name }}
             </span>
             <span v-else class="cat badge bg-secondary p-2 mr-3">Uncategorized</span>
 
             <!-- Post Date -->
-            <div class="date">{{ formatDate(postData.created_at) }}</div>
+            <div class="date">{{ formatDate(post.created_at) }}</div>
         </div>
+
+        <!-- Post content -->
         <div class="post-content mb-3">
-            {{ postData.content }}
+            {{ post.content }}
+        </div>
+
+        <!-- Post tags -->
+        <div class="tags" v-if="post.tags.length !== 0">
+            Tag: 
+            <span
+                v-for="tag in post.tags"
+                :key="`post-${post.id}-tag-${tag.id}`"
+                class="badge badge-primary mr-2"
+            >
+                {{ tag.name }}
+            </span>
         </div>
     </article>
 </template>
@@ -21,19 +43,13 @@
 export default {
     name: 'Post',
     props: {
-        postData: Object,
-        postCategories: Array,
+        post: Object,
     },
     methods: {
         formatDate(inputDate) {
             const date = new Date(inputDate);
             return Intl.DateTimeFormat('it-IT').format(date);
         },
-        getPostCategoryName(id) {
-            let output = '';
-            this.postCategories.forEach(cat => cat.id === id ? output = cat.category_name : null);
-            return output;
-        }
     }
 }
 // cat.id === id ? cat.category_name : null
@@ -43,6 +59,18 @@ export default {
 article {
     border-radius: 20px;
     box-shadow: 0 0 10px 1px #ccc;
+
+    .post-title {
+        a {
+            color: #212529;
+            transition: color .4s;
+            text-decoration: none;
+
+            &:hover {
+                color: #3490dc;
+            }
+        }
+    }
 
     .post-info {
         .cat {
