@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 // Models
 use App\Post;
@@ -177,11 +178,30 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        if($id === 'truncate') {
+            $all_posts = Post::all();
+
+            foreach ($all_posts as $post) {
+                $post->delete();
+            }
+
+            return redirect()->route('admin.posts.index')->with('truncated', 'La tabella dei post è stata completamente resettata.');
+        }
+
         $delete_post = Post::find($id);
 
         $delete_post->delete();
 
         return redirect()->route('admin.posts.index')->with('deleted', $delete_post->title);
+    }
+
+    /**
+     * Reset Posts table.
+     */
+    public function truncate() {
+        Post::truncate();
+
+        return redirect()->route('admin.posts.index')->with('truncated', 'La tabella dei post è stata completamente resettata.');
     }
 
     /**

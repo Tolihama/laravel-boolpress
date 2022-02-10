@@ -3,8 +3,18 @@
 @section('content')
     <div class="container">
         <h2 class="mb-3">Posts List</h2>
-        <div class="py-3 mb-4">
+        <div class="py-3 mb-4 d-flex justify-content-between">
             <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">Crea nuovo post</a>
+            <form 
+                action="{{ route('admin.posts.destroy', 'truncate') }}" 
+                method="POST" 
+                onclick="return confirm('Sicuro di voler resettare tutta la tabella? L\'operazione non è reversibile')"
+            >
+                @csrf
+                @method('DELETE')
+
+                <button type="submit" class="btn btn-danger">Reset Tabella</button>
+            </form>
         </div>
 
         @if (session('deleted'))
@@ -12,16 +22,17 @@
                 <strong>"{{ session('deleted') }}"</strong> è stato cancellato.
             </div>
         @endif
+
+        @if (session('truncated'))
+            <div class="alert alert-success">
+                <strong>"{{ session('truncated') }}"</strong>
+            </div>
+        @endif
     
         @if ($posts->isEmpty())
             <p>No posts found. <a href="{{ route('admin.posts.create') }}">Create a new one</a>.</p>
         @else
             <div class="d-flex align-items-center mb-4">
-{{--                 @if ($posts->links()->data !== null)
-                    <div class="mr-3">
-                        {{ $posts->onEachSide(0)->links() }}
-                    </div>
-                @endif --}}
                 <div class="mr-3">
                     {{ $posts->onEachSide(0)->links() }}
                 </div>
