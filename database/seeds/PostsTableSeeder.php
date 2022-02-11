@@ -18,7 +18,7 @@ class PostsTableSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $new_post = new Post();
 
             $new_post->category_id = rand(1, 4);

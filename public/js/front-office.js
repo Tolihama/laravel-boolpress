@@ -3821,7 +3821,7 @@ var render = function () {
           ]),
       _vm._v(" "),
       _c("div", { staticClass: "date" }, [
-        _vm._v(_vm._s(_vm.formatDate(_vm.post.created_at))),
+        _vm._v(_vm._s(_vm.post.formatted_date)),
       ]),
     ]),
     _vm._v(" "),

@@ -17,7 +17,7 @@
             <span v-else class="cat badge bg-secondary p-2 mr-3">Uncategorized</span>
 
             <!-- Post Date -->
-            <div class="date">{{ formatDate(post.created_at) }}</div>
+            <div class="date">{{ post.formatted_date }}</div>
         </div>
 
         <!-- Post content -->
