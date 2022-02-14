@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 // Models
 use App\Post;
@@ -56,6 +58,11 @@ class PostController extends Controller
         // Save all data from form
         $data = $request->all();
 
+        // Save cover image in storage if exists
+        if (array_key_exists('cover', $data)) {
+            $data['cover'] = Storage::put('posts-images', $data['cover']);
+        }
+
         // Crea nuovo istanza di Post
         $new_post = new Post();
 
@@ -97,6 +104,8 @@ class PostController extends Controller
             abort(404);
         }
 
+        $post['formatted_date'] = $this->format_date($post['created_at']);
+
         return view('admin.posts.show', compact('post'));
     }
 
@@ -111,13 +120,13 @@ class PostController extends Controller
         // Query for post to edit
         $edit_post = Post::find($id);
 
-        // Categories retrieve
-        $categories = Category::all();
-        $tags = Tag::all();
-
         if (! $edit_post) {
             abort(404);
         }
+
+        // Categories retrieve
+        $categories = Category::all();
+        $tags = Tag::all();
 
         return view('admin.posts.edit', compact('edit_post', 'categories', 'tags'));
     }
@@ -156,6 +165,17 @@ class PostController extends Controller
             $data['slug'] = $post->slug;
         }
 
+        // Save cover image in storage if exists in form
+        if (array_key_exists('cover', $data)) {
+
+            // Delete pre-existing image if present
+            if($post->cover) {
+                Storage::delete($post->cover);
+            }
+
+            $data['cover'] = Storage::put('posts-images', $data['cover']);
+        }
+
         // Update
         $post->update($data);
 
@@ -178,30 +198,29 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        // Delete all posts function
         if($id === 'truncate') {
             $all_posts = Post::all();
 
             foreach ($all_posts as $post) {
+                if ($post->cover) {
+                    Storage::delete($post->cover);
+                }
                 $post->delete();
             }
 
             return redirect()->route('admin.posts.index')->with('truncated', 'La tabella dei post è stata completamente resettata.');
         }
 
+        // Delete single post
         $delete_post = Post::find($id);
 
+        if ($delete_post->cover) {
+            Storage::delete($delete_post->cover);
+        }
         $delete_post->delete();
 
         return redirect()->route('admin.posts.index')->with('deleted', $delete_post->title);
-    }
-
-    /**
-     * Reset Posts table.
-     */
-    public function truncate() {
-        Post::truncate();
-
-        return redirect()->route('admin.posts.index')->with('truncated', 'La tabella dei post è stata completamente resettata.');
     }
 
     /**
@@ -212,7 +231,8 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'nullable|exists:tags,id'
+            'tags' => 'nullable|exists:tags,id',
+            'cover' => 'nullable|file|mimes:jpeg,jpg,png'
         ];
     }
 
@@ -226,5 +246,10 @@ class PostController extends Controller
             'category_id.exists' => "L'id della categoria non è valido.",
             'tags.exists' => "C'è almeno un id non valido."
         ];
+    }
+
+    // Private function to format date
+    private function format_date($date_to_format) {
+        return Carbon::parse($date_to_format)->isoFormat('dddd D/OM/OY, HH:mm') . ' (' . $date_to_format->diffForHumans() . ')';
     }
 }

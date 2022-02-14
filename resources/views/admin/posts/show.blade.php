@@ -12,14 +12,24 @@
             {{-- Post Title --}}
             <h3 class="fw-bold">{{ $post->title }}</h3>
 
-            <div class="post-info py-2 mb-2 d-flex">
+            <div class="post-info py-2 mb-2 d-flex align-items-center">
                 {{-- Post Category --}}
                 @if ($post->category)
-                    <span class="cat badge bg-primary p-2 me-3">{{ $post->category->name }}</span>
+                    <span class="cat badge bg-primary p-2 mr-3">{{ $post->category->name }}</span>
                 @else
-                    <span class="cat badge bg-secondary p-2 me-3">Uncategorized</span>
+                    <span class="cat badge bg-secondary p-2 mr-3">Uncategorized</span>
                 @endif
+
+                {{-- Post date --}}
+                <span>{{ $post->formatted_date }}</span>
             </div>
+
+            {{-- Post image --}}
+            @if ($post->cover)
+                <figure>
+                    <img src="{{ asset("storage/{$post->cover}") }}" alt="Cover {{ $post->title }}">
+                </figure>
+            @endif
 
             {{-- Post content --}}
             <div class="post-content py-4">

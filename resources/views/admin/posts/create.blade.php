@@ -16,7 +16,7 @@
         @endif
 
         {{-- Create new post form --}}
-        <form action="{{ route('admin.posts.store') }}" method="POST">
+        <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             {{-- Title --}}
@@ -38,7 +38,7 @@
             </div>
 
             {{-- Categories --}}
-            <div class="mb-3">
+            <div class="mb-4">
                 <label for="category_id" class="label-control">Categoria:</label>
                 <select class="form-control" name="category_id" id="category_id">
                     <option value="">Uncategorized</option>
@@ -57,7 +57,7 @@
             </div>
 
             {{-- Tags --}}
-            <div class="mb-3">
+            <div class="mb-3 form-group">
                 <h4>Tags</h4>
                 @foreach ($tags as $tag)
                     <span class="d-inline-block form-check mr-3">
@@ -70,6 +70,15 @@
                     </span>
                 @endforeach
                 @error('tags')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            {{-- Image upload --}}
+            <div class="mb-5 form-group">
+                <h4>Immagine post</h4>
+                <input class="form-control-file" type="file" name="cover" id="cover">
+                @error('cover')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>

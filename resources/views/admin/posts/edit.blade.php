@@ -20,7 +20,7 @@
         @endif
 
         {{-- Create new post form --}}
-        <form action="{{ route('admin.posts.update', $edit_post->id) }}" method="POST">
+        <form action="{{ route('admin.posts.update', $edit_post->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
 
@@ -43,7 +43,7 @@
             </div>
 
             {{-- Categories --}}
-            <div class="mb-3">
+            <div class="mb-4">
                 <label for="category_id" class="label-control">Categoria:</label>
                 <select class="form-control" name="category_id" id="category_id">
                     <option value="">Uncategorized</option>
@@ -79,6 +79,14 @@
                     </span>
                 @endforeach
                 @error('tags')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-5 form-group">
+                <h4>Immagine post</h4>
+                <input class="form-control-file" type="file" name="cover" id="cover">
+                @error('cover')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>

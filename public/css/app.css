@@ -10117,3 +10117,10 @@ article.post-details .post-info .cat::before {
   font-weight: 700;
   margin-right: 0.5rem;
 }
+article.post-details figure {
+  border-radius: 20px;
+  overflow: hidden;
+}
+article.post-details figure img {
+  width: 100%;
+}

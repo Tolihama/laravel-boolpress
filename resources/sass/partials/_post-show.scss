@@ -15,4 +15,13 @@ article.post-details {
             }
         }
     }
+
+    figure {
+        border-radius: 20px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+        }
+    }
 }
