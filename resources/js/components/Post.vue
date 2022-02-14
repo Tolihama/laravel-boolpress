@@ -20,6 +20,11 @@
             <div class="date">{{ post.formatted_date }}</div>
         </div>
 
+        <!-- Post cover image -->
+        <figure class="post-cover" v-if="post.cover">
+            <img :src="post.cover" :alt="`Cover ${post.title}`">
+        </figure>
+
         <!-- Post content -->
         <div class="post-content mb-3">
             {{ post.content }}
@@ -91,6 +96,15 @@ article {
                 font-weight: 700;
                 margin-right: .5rem;
             }
+        }
+    }
+
+    figure {
+        border-radius: 20px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
         }
     }
 }

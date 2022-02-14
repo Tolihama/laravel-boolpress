@@ -68,7 +68,7 @@ export default {
                 } else if(this.pagination.current === this.pagination.last) {
                     pagesInRange.push(this.pagination.current - 2, this.pagination.current - 1, this.pagination.current);
                 } else {
-                    pagesInRange.push(this.pagination.current - 1, this.pagination.current, this.pagination.current + 1);
+                    pagesInRange.push(this.pagination.current);
                 }
             } else {
                 for(let i = 1; i <= this.pagination.last; i++) {

@@ -2032,7 +2032,7 @@ __webpack_require__.r(__webpack_exports__);
         } else if (this.pagination.current === this.pagination.last) {
           pagesInRange.push(this.pagination.current - 2, this.pagination.current - 1, this.pagination.current);
         } else {
-          pagesInRange.push(this.pagination.current - 1, this.pagination.current, this.pagination.current + 1);
+          pagesInRange.push(this.pagination.current);
         }
       } else {
         for (var i = 1; i <= this.pagination.last; i++) {
@@ -2056,6 +2056,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2343,7 +2348,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "article[data-v-5e8280ea] {\n  border-radius: 20px;\n  box-shadow: 0 0 10px 1px #ccc;\n}\narticle .post-title a[data-v-5e8280ea] {\n  color: #212529;\n  transition: color 0.4s;\n  text-decoration: none;\n}\narticle .post-title a[data-v-5e8280ea]:hover {\n  color: #3490dc;\n}\narticle .post-info .cat[data-v-5e8280ea] {\n  color: #fff;\n}\narticle .post-info .cat[data-v-5e8280ea]::before {\n  content: \"\\F07C\";\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 700;\n  margin-right: 0.5rem;\n}\narticle .post-info .date[data-v-5e8280ea]::before {\n  content: \"\\F073\";\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 700;\n  margin-right: 0.5rem;\n}", ""]);
+exports.push([module.i, "article[data-v-5e8280ea] {\n  border-radius: 20px;\n  box-shadow: 0 0 10px 1px #ccc;\n}\narticle .post-title a[data-v-5e8280ea] {\n  color: #212529;\n  transition: color 0.4s;\n  text-decoration: none;\n}\narticle .post-title a[data-v-5e8280ea]:hover {\n  color: #3490dc;\n}\narticle .post-info .cat[data-v-5e8280ea] {\n  color: #fff;\n}\narticle .post-info .cat[data-v-5e8280ea]::before {\n  content: \"\\F07C\";\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 700;\n  margin-right: 0.5rem;\n}\narticle .post-info .date[data-v-5e8280ea]::before {\n  content: \"\\F073\";\n  font-family: \"Font Awesome 5 Free\";\n  font-weight: 700;\n  margin-right: 0.5rem;\n}\narticle figure[data-v-5e8280ea] {\n  border-radius: 20px;\n  overflow: hidden;\n}\narticle figure img[data-v-5e8280ea] {\n  width: 100%;\n}", ""]);
 
 // exports
 
@@ -3824,6 +3829,14 @@ var render = function () {
         _vm._v(_vm._s(_vm.post.formatted_date)),
       ]),
     ]),
+    _vm._v(" "),
+    _vm.post.cover
+      ? _c("figure", { staticClass: "post-cover" }, [
+          _c("img", {
+            attrs: { src: _vm.post.cover, alt: "Cover " + _vm.post.title },
+          }),
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "post-content mb-3" }, [
       _vm._v("\n        " + _vm._s(_vm.post.content) + "\n    "),

@@ -14,11 +14,15 @@ class PostController extends Controller
     // Index
     public function index() {
         $posts = Post::with(['category', 'tags'])
-                ->orderBy('created_at', 'desc')
+                ->orderBy('id', 'desc')
                 ->paginate(5);
 
         foreach($posts as $post) {
             $post['formatted_date'] = $this->format_date($post['created_at']);
+
+            if($post->cover) {
+                $post->cover = url("storage/{$post->cover}");
+            }
         }
 
         return response()->json($posts);
@@ -30,6 +34,10 @@ class PostController extends Controller
 
         if(! $post) {
             $post['not_found'] = true;
+        }
+
+        if($post->cover) {
+            $post->cover = url("storage/{$post->cover}");
         }
 
         $post['formatted_date'] = $this->format_date($post['created_at']);
