@@ -85,6 +85,16 @@
 
             <div class="mb-5 form-group">
                 <h4>Immagine post</h4>
+                @if ($edit_post->cover)
+                <figure class="py-2">
+                    <div>Anteprima cover preesistente:</div>
+                    <img width="200" src="{{ asset("storage/{$edit_post->cover}") }}" alt="Anteprima immagine cover">
+                    <div class="d-flex align-items-center py-2">
+                        <label class="mb-0 mr-2" for="remove_cover">Rimuovere cover:</label>
+                        <input type="checkbox" name="remove_cover" id="remove_cover">
+                    </div>
+                </figure>
+                @endif
                 <input class="form-control-file" type="file" name="cover" id="cover">
                 @error('cover')
                     <div class="text-danger">{{ $message }}</div>

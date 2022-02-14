@@ -176,6 +176,12 @@ class PostController extends Controller
             $data['cover'] = Storage::put('posts-images', $data['cover']);
         }
 
+        // Delete pre-existing image if requested by user and present in storage
+        if (array_key_exists('remove_cover', $data) && $post->cover) {
+            $post->cover = null;
+            Storage::delete($post->cover);
+        }
+
         // Update
         $post->update($data);
 
